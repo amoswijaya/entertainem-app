@@ -19,7 +19,11 @@ class Entertainme {
         res.status(200).json({ movies, tvSeries })
       }
     } catch (err) {
-      console.log(err)
+      if(err.response.status == 404) {
+        res.status(404).json(err.response.statusText)
+      }else{
+        res.status(500).json('Internal server error')
+      }
     }
   }
 }

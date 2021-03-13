@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-const baseUrl = 'http://localhost:3001/movie/'
+const baseUrl = 'http://localhost:4001/movie/'
 
 class Movie {
   static getMovie() {

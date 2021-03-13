@@ -6,25 +6,34 @@ class MovieController {
       const movie = await Movie.find()
       res.status(200).json(movie)
     } catch (err) {
-      console.log(err)
+      res.status(400).json({err: err.message})
+    }
+  }
+
+  static async findMovieById (req, res) {
+    try {
+      const movie = await Movie.findById(req.params.id)
+      res.status(200).json(movie)
+    } catch (err) {
+      res.status(400).json({err: err.message})
     }
   }
 
   static async createMovie(req, res) {
     try {
       const data = await Movie.create(req.body)
-      res.status(201).json(data)
+      res.status(201).json(data.ops[0])
     } catch (err) {
-      console.log(err)
+      res.status(400).json({err: err.message})
     }
   }
 
   static async editMovie(req, res) {
     try {
-      const data = await Movie.update(req.params.id, req.body)
-      res.status(200).json(data)
+      await Movie.update(req.params.id, req.body)
+      res.status(200).json(req.body)
     } catch (err) {
-      console.log(err)
+      res.status(400).json({err: err.message})
     }
   }
 
@@ -33,7 +42,7 @@ class MovieController {
       const data = await Movie.destroy(req.params.id)
       res.status(200).json(data)
     } catch (err) {
-      console.log(err)
+      res.status(400).json({err: err.message})
     }
   }
 }

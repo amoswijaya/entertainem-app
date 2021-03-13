@@ -7,6 +7,12 @@ class Movie {
     return getDatabase().find().toArray()
   }
 
+  static findById(id) {
+    return getDatabase().findOne({
+      _id: ObjectID(id)
+    })
+  }
+
   static create(payload) {
     return getDatabase().insertOne(payload)
   }

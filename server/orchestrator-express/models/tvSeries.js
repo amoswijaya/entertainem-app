@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-const baseUrl = 'http://localhost:3002/tv'
+const baseUrl = 'http://localhost:4002/tv'
 
 
 class TvSeries {
