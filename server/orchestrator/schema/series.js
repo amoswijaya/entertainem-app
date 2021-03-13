@@ -87,7 +87,11 @@ module.exports = {
       editSeries: async (_, args) => {
         const { title, overview, poster_path, popularity, tags } = args.edit
         const payload = {
-          title
+          title,
+          overview,
+          poster_path,
+          popularity,
+          tags
         }
         const { data } = await axios.put(url + args.edit._id, payload)
         redis.del('series')
