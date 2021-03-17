@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { addMovie, getAll } from '../queries/movie'
+import { AddMovie, GetAll } from '../queries/movie'
 import { useMutation } from '@apollo/client';
 import { useHistory } from "react-router-dom"
 import Select from 'react-select'
 export default function Form() {
   const history = useHistory()
-  const [addM] = useMutation(addMovie, { refetchQueries: [{ query: getAll }] })
+  const [addM] = useMutation(AddMovie, { refetchQueries: [{ query: GetAll }] })
   const [tag, setTag] = useState([])
   const [dataMovie, SetdataMovie] = useState({
     title: '',
@@ -67,7 +67,7 @@ export default function Form() {
             <input type="text" class="form-control" placeholder="path poster" name="poster_path" onChange={handleAddData} />
           </div>
           <div class="form-group col">
-            <input type="text" class="form-control" placeholder="popularity" name="popularity" onChange={handleAddData} />
+            <input type="number" class="form-control" placeholder="popularity" name="popularity" onChange={handleAddData} />
           </div>
         </div>
         <div className="row ">

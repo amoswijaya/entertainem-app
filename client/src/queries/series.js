@@ -27,3 +27,16 @@ query getOne(
   }
 }
 `
+
+export const GetAllSeries = gql`
+query getAllSeries{
+  series{
+    _id
+    title
+    overview
+    poster_path
+    popularity
+    tags
+  }
+}
+`

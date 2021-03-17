@@ -1,13 +1,10 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { useQuery, useMutation } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { GetSeriesById } from '../queries/series'
-import { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 export default function Detail() {
   const { id } = useParams()
-  const history = useHistory()
-  const [isEdit, setEdit] = useState(false)
-  const { loading, error, data } = useQuery(GetSeriesById, {
+  const { loading, data } = useQuery(GetSeriesById, {
     variables: {
       _id: id
     }
@@ -20,16 +17,16 @@ export default function Detail() {
   return (
     <>
       <Container>
-        <Card>
+        <Card fluid>
           <Row>
             <Col>
-              <img src={poster_path} alt="..."></img>
+              <img src={poster_path} alt="..." width="500" height="600"></img>
             </Col>
             <Col>
               <ul class="list-group">
                 <li class="list-group-item">Title: {title}</li>
                 <li class="list-group-item">Overview: {overview}</li>
-                <li class="list-group-item">ratings: {popularity}</li>
+                <li class="list-group-item">ratings: {popularity}/10</li>
                 <li class="list-group-item">
                   {tags.map(tag => <span class="badge badge-pill badge-primary">{tag}</span>)}
                 </li>

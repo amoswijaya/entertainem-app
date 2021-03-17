@@ -6,6 +6,9 @@ import NavBar from './components/navBar';
 import AddMovie from './pages/addMovie';
 import DetailMovie from './pages/detailMovie';
 import DetailSeries from './pages/detailSeries';
+import Movies from './pages/movies';
+import Series from './pages/series';
+import Favourite from './pages/favourite';
 function App() {
   return (
     <>
@@ -20,16 +23,16 @@ function App() {
               <DetailMovie />
             </Route>
             <Route path="/movies">
-              <h1>hello movie</h1>
+              <Movies />
             </Route>
             <Route path="/series/:id">
               <DetailSeries />
             </Route>
             <Route path="/series">
-              <h1>hello series</h1>
+              <Series />
             </Route>
             <Route path="/favorites">
-              <h1>hello favorites</h1>
+              <Favourite />
             </Route>
             <Route path="/addMovie">
               <AddMovie />

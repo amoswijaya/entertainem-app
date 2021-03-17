@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-export const getAll = gql`
+export const GetAll = gql`
 query getAll{
   movies{
     _id
@@ -11,6 +11,19 @@ query getAll{
     tags
   }
   series{
+    _id
+    title
+    overview
+    poster_path
+    popularity
+    tags
+  }
+}
+`
+
+export const GetAllMovie = gql`
+query getAllMovies{
+  movies{
     _id
     title
     overview
@@ -51,7 +64,7 @@ query getOne(
 
 
 
-export const addMovie = gql`
+export const AddMovie = gql`
 mutation addmovie($addMovie: MovieInput)  {
   addMovie(movie:$addMovie){
     title,

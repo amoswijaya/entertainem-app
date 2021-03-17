@@ -1,6 +1,6 @@
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useQuery, useMutation } from '@apollo/client'
-import { GetMovieById, EditMovie, getAll } from '../queries/movie'
+import { GetMovieById, EditMovie, GetAll } from '../queries/movie'
 import { useState, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import Select from 'react-select'
@@ -10,7 +10,7 @@ export default function Detail() {
   const [isEdit, setEdit] = useState(false)
   const [tags, setTags] = useState([])
   const [tag, setTag] = useState([])
-  const { loading, error, data } = useQuery(GetMovieById, {
+  const { loading, data } = useQuery(GetMovieById, {
     variables: {
       _id: id
     }
@@ -31,7 +31,7 @@ export default function Detail() {
   // console.log(data?.movieById.__typename)
   const [dataEdit, setDataEdit] = useState(data?.movieById)
   const [editData] = useMutation(EditMovie, {
-    refetchQueries: [{ query: getAll }]
+    refetchQueries: [{ query: GetAll }]
   })
   console.log(dataEdit)
   useEffect(() => {
@@ -94,18 +94,22 @@ export default function Detail() {
             </Col>
             <Col>
               <div className="d-flex justify-content-end">
-                <button onClick={() => !isEdit ? setEdit(true) : setEdit(false)} className="btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                  </svg>
-                </button>
+                <OverlayTrigger overlay={<Tooltip id="tooltip">Edit</Tooltip>}>
+                  <span className="d-inline-block">
+                    <button onClick={() => !isEdit ? setEdit(true) : setEdit(false)} className="btn">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                      </svg>
+                    </button>
+                  </span>
+                </OverlayTrigger>
               </div>
               {!isEdit ?
                 <ul class="list-group mt-3">
                   <li class="list-group-item">Title: {title}</li>
                   <li class="list-group-item">Overview: {overview}</li>
-                  <li class="list-group-item">ratings: {popularity}</li>
+                  <li class="list-group-item">ratings: {popularity}/10</li>
                   <li class="list-group-item">
                     {
                       data?.movieById.tags.map(tag => <span class="badge badge-pill badge-primary">{tag}</span>)
@@ -121,7 +125,7 @@ export default function Detail() {
                     <input type="text" class="form-control" name="overview" onChange={handleInput} defaultValue={overview} placeholder="overview" />
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="popularity" onChange={handleInput} defaultValue={popularity} placeholder="ratings" />
+                    <input type="number" class="form-control" name="popularity" onChange={handleInput} defaultValue={popularity} placeholder="ratings" />
                   </div>
                   <div class="form-group">
                     <input type="text" class="form-control" name="poster_path" onChange={handleInput} defaultValue={poster_path} placeholder="url poster" />
@@ -138,7 +142,7 @@ export default function Detail() {
                     />
                   </div>
                   <div className="d-flex justify-content-end">
-                    <button onClick={handleEdit} className="btn btn-secondary mx-4" >save</button>
+                    <button onClick={handleEdit} className="btn btn-primary mx-4" >save</button>
                   </div>
                 </div>
               }
